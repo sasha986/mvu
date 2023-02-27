@@ -15,8 +15,8 @@ class VideoSerializer(serializers.ModelSerializer):
     Validates file type (mimetype)
     """
     
-    video = serializers.FileField(validators=[MimetypeValidator(VIDEO_CONTENT_TYPES), FileSizeValidator(VIDEO_FILE_SIZE_IN_BYTES)])
-    thumbnail = serializers.ImageField(validators=[MimetypeValidator(IMAGE_CONTENT_TYPES), FileSizeValidator(IMAGE_FILE_SIZE_IN_BYTES)])
+    video = serializers.FileField(validators=[MimetypeValidator(VIDEO_CONTENT_TYPES, code='video/mp4'), FileSizeValidator(VIDEO_FILE_SIZE_IN_BYTES)])
+    thumbnail = serializers.ImageField(validators=[MimetypeValidator(IMAGE_CONTENT_TYPES, code='image/png,jpeg,jpg'), FileSizeValidator(IMAGE_FILE_SIZE_IN_BYTES)])
     
     class Meta:
         model = Video

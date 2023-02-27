@@ -20,10 +20,10 @@ class Video(models.Model):
         verbose_name_plural = 'Videos'
         ordering = ['-id']
 
-    title = models.CharField(max_length=250)
-    description = models.CharField(max_length=250)
-    thumbnail = models.ImageField(upload_to=hash_thumbnail_filename, null=True, storage=OverwriteStorage())
-    video = models.FileField(upload_to=hash_video_filename, null=True, storage=OverwriteStorage())
+    title = models.CharField(max_length=250, null=False, blank=False)
+    description = models.CharField(max_length=250, null=False, blank=False)
+    thumbnail = models.ImageField(upload_to=hash_thumbnail_filename, null=False, blank=False, storage=OverwriteStorage())
+    video = models.FileField(upload_to=hash_video_filename, null=False, blank=False, storage=OverwriteStorage())
 
     uploaded_dt = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

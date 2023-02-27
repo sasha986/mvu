@@ -16,5 +16,5 @@ class UploadVideoModelForm(forms.ModelForm):
     
     title = forms.CharField(max_length=250)
     description = forms.CharField(max_length=250, required=False)
-    video = forms.FileField(validators=[MimetypeValidator(VIDEO_CONTENT_TYPES), FileSizeValidator(VIDEO_FILE_SIZE_IN_BYTES)])
-    thumbnail = forms.ImageField(validators=[MimetypeValidator(IMAGE_CONTENT_TYPES), FileSizeValidator(IMAGE_FILE_SIZE_IN_BYTES)])
+    video = forms.FileField(validators=[MimetypeValidator(VIDEO_CONTENT_TYPES, code='video/mp4'), FileSizeValidator(VIDEO_FILE_SIZE_IN_BYTES)])
+    thumbnail = forms.ImageField(validators=[MimetypeValidator(IMAGE_CONTENT_TYPES, code='image/png,jpeg,jpg'), FileSizeValidator(IMAGE_FILE_SIZE_IN_BYTES)])
