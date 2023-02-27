@@ -24,12 +24,15 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="MeasurementVideoUpload API",
-      default_version='v1',
-      description="Api used to upload and fetch measurement videos",
-      terms_of_service="free to use",
-      contact=openapi.Contact(email="contact@mvu.local"),
-      license=openapi.License(name="BSD License"),
+        title="MeasurementVideoUpload API",
+        default_version='v1',
+        description="Api used to upload and fetch measurement videos",
+        terms_of_service="free to use",
+        contact=openapi.Contact(email="contact@mvu.local"),
+        license=openapi.License(name="BSD License"),
+        consumes = {"application/json" },
+        produces = {"application/json" },
+        # schemes = {SwaggerDefinition.Scheme.HTTPS},
    ),
    public=True,
    permission_classes=[permissions.AllowAny],

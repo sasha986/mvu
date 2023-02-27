@@ -10,5 +10,5 @@ class VideoAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'video', 'thumbnail', 'user']
     
     def save_model(self, request, obj, form, change):
-        obj.uploaded_by = request.user
+        obj.user = request.user
         super().save_model(request, obj, form, change)

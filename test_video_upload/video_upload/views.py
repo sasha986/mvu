@@ -23,11 +23,12 @@ class VideoListAPIView(APIView):
     @swagger_auto_schema(responses={200: VideoSerializer(many=True)})
     def get(self, request):
         
-        videos = Video.objects.filter(uploaded_by=request.user)
+        videos = Video.objects.filter(user=request.user)
         serializer = VideoSerializer(videos, many=True)
         
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+
 class VideoAPIView(APIView):
     """
     VideoAPIView upload video, returns video by ID, update and delete video by ID
@@ -40,7 +41,7 @@ class VideoAPIView(APIView):
     @swagger_auto_schema(responses={200: VideoSerializer()})
     def get(self, request, id=None):
         try:
-            video = Video.objects.get(uploaded_by=request.user, id=id)
+            video = Video.objects.get(user=request.user, id=id)
         except Video.DoesNotExist:
             return Response({'error': 'Video does not exits!'}, status=status.HTTP_404_NOT_FOUND)
         
@@ -54,7 +55,7 @@ class VideoAPIView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        serializer.validated_data['uploaded_by'] = request.user
+        serializer.validated_data['user'] = request.user
         serializer.save()
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -63,7 +64,7 @@ class VideoAPIView(APIView):
     @swagger_auto_schema(responses={200: VideoSerializer()})
     def patch(self, request, id=None):
         try:
-            video = Video.objects.get(uploaded_by=request.user, id=id)
+            video = Video.objects.get(user=request.user, id=id)
         except Video.DoesNotExist:
             return Response({'error': 'Video does not exits!'}, status=status.HTTP_404_NOT_FOUND)
         
@@ -71,7 +72,7 @@ class VideoAPIView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        serializer.validated_data['uploaded_by'] = request.user
+        serializer.validated_data['user'] = request.user
         serializer.save()
         
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -80,7 +81,7 @@ class VideoAPIView(APIView):
     @swagger_auto_schema(responses={204: 'Video deleted successfully!'}, operation_description="description")
     def delete(self, request):
         try:
-            video = Video.objects.get(uploaded_by=request.user, id=id)
+            video = Video.objects.get(user=request.user, id=id)
         except Video.DoesNotExist:
             return Response({'error': 'Video does not exits!'}, status=status.HTTP_404_NOT_FOUND)
         
