@@ -4,6 +4,10 @@ import magic
 
 
 class MimetypeValidator(object):
+    """
+    Validates file type (mimetype)
+    """
+    
     def __init__(self, mimetypes, message=None, code='file-type'):
         self.mimetypes = mimetypes
         self.message = message

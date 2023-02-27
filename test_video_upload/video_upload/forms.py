@@ -10,6 +10,10 @@ IMAGE_FILE_SIZE_IN_BYTES = 1024 * 1024 # max allowed thumbnail file size ~1 Mb
 
 
 class UploadVideoModelForm(forms.ModelForm):
+    """
+    UploadVideoModelForm is used to upload video and update video details
+    """
+    
     title = forms.CharField(max_length=250)
     video = forms.FileField(validators=[MimetypeValidator(VIDEO_CONTENT_TYPES), FileSizeValidator(VIDEO_FILE_SIZE_IN_BYTES)])
     thumbnail = forms.ImageField(validators=[MimetypeValidator(IMAGE_CONTENT_TYPES), FileSizeValidator(IMAGE_FILE_SIZE_IN_BYTES)])

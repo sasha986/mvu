@@ -11,6 +11,9 @@ IMAGE_FILE_SIZE_IN_BYTES = 1024 * 1024 # max allowed thumbnail file size ~1 Mb
 
 
 class VideoSerializer(serializers.ModelSerializer):
+    """
+    Validates file type (mimetype)
+    """
     
     video = serializers.FileField(validators=[MimetypeValidator(VIDEO_CONTENT_TYPES), FileSizeValidator(VIDEO_FILE_SIZE_IN_BYTES)])
     thumbnail = serializers.ImageField(validators=[MimetypeValidator(IMAGE_CONTENT_TYPES), FileSizeValidator(IMAGE_FILE_SIZE_IN_BYTES)])

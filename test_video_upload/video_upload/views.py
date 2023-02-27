@@ -10,6 +10,10 @@ from .models import Video
 
 
 class VideoListAPIView(APIView):
+    """
+    VideoListAPIView returns a list of all video uploaded by user.
+    """
+    
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
@@ -22,11 +26,13 @@ class VideoListAPIView(APIView):
     
 class VideoAPIView(APIView):
     """
-    Returns a list of all **active** accounts in the system.
+    VideoAPIView upload video, returns video by ID, update and delete video by ID
     """
+    
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
+    # Get video by ID
     def get(self, request, id=None):
         try:
             video = Video.objects.get(uploaded_by=request.user, id=id)
@@ -36,6 +42,7 @@ class VideoAPIView(APIView):
         serializer = VideoSerializer(video)
         return Response(serializer.data)
     
+    # Upload video
     def post(self, request, id=None):
         serializer = VideoSerializer(data=request.data, context={'request': request})
         if not serializer.is_valid():
@@ -46,7 +53,7 @@ class VideoAPIView(APIView):
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-    
+    # Update video details for video ID
     def patch(self, request, id=None):
         try:
             video = Video.objects.get(uploaded_by=request.user, id=id)
@@ -62,6 +69,7 @@ class VideoAPIView(APIView):
         
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    # Delete uploaded video by ID
     def delete(self, request):
         try:
             video = Video.objects.get(uploaded_by=request.user, id=id)

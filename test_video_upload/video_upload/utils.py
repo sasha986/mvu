@@ -5,6 +5,14 @@ from functools import partial
 from django.conf import settings
 
 def hash_file(file, block_size=65536):
+    """
+    Args:
+        file (_type_): file
+        block_size (int, optional): Block size to read. Defaults to 65536.
+
+    Returns:
+        _type_: hash value of the file
+    """
     hasher = hashlib.sha1()
     for buf in iter(partial(file.read, block_size), b''):
         hasher.update(buf)
