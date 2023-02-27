@@ -32,8 +32,9 @@ class VideoListAPIView(APIView):
 
 class VideoAPIView(APIView):
     """
-    VideoAPIView upload video, returns video by ID, update and delete video by ID
+    VideoAPIView returns video by ID and delete video by ID
     """
+    
     allowed_methods = ['GET', 'POST', 'PATCH', 'DELETE']
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -48,6 +49,27 @@ class VideoAPIView(APIView):
         
         serializer = VideoSerializer(video)
         return Response(serializer.data)
+    
+    # Delete uploaded video by ID
+    @swagger_auto_schema(responses={204: 'Video deleted successfully!'}, operation_description="description")
+    def delete(self, request):
+        try:
+            video = Video.objects.get(user=request.user, id=id)
+        except Video.DoesNotExist:
+            return Response({'error': 'Video does not exits!'}, status=status.HTTP_404_NOT_FOUND)
+        
+        video.delete()
+        return Response({'ok': 'Video deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+
+
+class VideoUploadAPIView(APIView):
+    """
+    VideoAPIView upload video, update video by ID
+    """
+    
+    allowed_methods = ['POST', 'PATCH']
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     
     # Upload video
     @swagger_auto_schema(responses={201: VideoSerializer()})
@@ -77,15 +99,3 @@ class VideoAPIView(APIView):
         serializer.save()
         
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    # Delete uploaded video by ID
-    @swagger_auto_schema(responses={204: 'Video deleted successfully!'}, operation_description="description")
-    def delete(self, request):
-        try:
-            video = Video.objects.get(user=request.user, id=id)
-        except Video.DoesNotExist:
-            return Response({'error': 'Video does not exits!'}, status=status.HTTP_404_NOT_FOUND)
-        
-        video.delete()
-        return Response({'ok': 'Video deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
-    

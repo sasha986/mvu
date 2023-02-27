@@ -2,7 +2,8 @@ from django.urls import path
 
 from .views import (
     VideoListAPIView,
-    VideoAPIView
+    VideoAPIView,
+    VideoUploadAPIView
 )
 
 app_name = 'video_upload'
@@ -11,5 +12,5 @@ app_name = 'video_upload'
 urlpatterns = [
     path('video/list', VideoListAPIView.as_view(), name='my_videos'),
     path('video/<id>', VideoAPIView.as_view(), name='video_details'),
-    path('video/upload', VideoAPIView.as_view(), name='video_upload'),
+    path('video/upload', VideoUploadAPIView.as_view(), name='video_upload'),
 ]
