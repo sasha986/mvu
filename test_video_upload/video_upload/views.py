@@ -17,6 +17,7 @@ class VideoListAPIView(APIView):
     VideoListAPIView returns a list of all video uploaded by user.
     """
     
+    allowed_methods = ['GET']
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
@@ -33,7 +34,7 @@ class VideoAPIView(APIView):
     """
     VideoAPIView upload video, returns video by ID, update and delete video by ID
     """
-    
+    allowed_methods = ['GET', 'POST', 'PATCH', 'DELETE']
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
