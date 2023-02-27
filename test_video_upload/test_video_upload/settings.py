@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'storages',
     'rest_framework.authtoken',
     'rest_framework',
+    'drf_yasg',
     'video_upload',
 ]
 
