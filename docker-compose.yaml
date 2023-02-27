@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  test_video_upload:
+    # depends_on:
+    #   - postgres_db
+    build:
+      context: ./test_video_upload
+      dockerfile: Dockerfile
+    image: test-video-upload:v1
+    environment:
+      - PORT=8000
+    env_file:
+      - test_video_upload/.env
+    ports:
+      - "8000:8000"
+    command: sh -c "chmod +x /app/migrate.sh && sh /app/migrate.sh && /app/entrypoint.sh"
+    volumes:
+       - staticfiles:/app/staticfiles/
+  # postgres_db:
+  #   image: postgres
+  #   restart: always
+  #   command: -p 5433
+  #   env_file:
+  #     - test_video_upload/.env
+  #   expose:
+  #     - 5433
+  #   ports:
+  #     - "5433:5433"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data/:rw
+
+volumes:
+  staticfiles:
+      external: true
+  # postgres_data:
